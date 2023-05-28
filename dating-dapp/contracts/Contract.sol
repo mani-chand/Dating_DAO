@@ -1,0 +1,190 @@
+// SPDX-License-Identifier: MIT
+pragma solidity ^0.8.0;
+
+import "@openzeppelin/contracts/token/ERC20/ERC20.sol";
+
+contract Dating is ERC20 {
+    struct Message{
+        string to;
+        string message;
+    }
+
+    struct Notification{
+        string user;
+        string friend;
+        string typeOfRequest;
+    }
+
+    struct User{
+        string username;
+        uint age;
+        string gender;
+        string profilePic;
+        bytes32 password;
+        bool isCommited;
+        uint likes;
+    }
+
+    address internal owner;
+    string[] public userNames;
+    mapping(string=>User[]) internal users;
+    mapping(string=>Notification[]) internal notifications;
+    mapping(string=>Message[]) internal messages;
+    mapping(string=>string[]) internal friends;
+    mapping(string=>string[]) internal likedBy;
+    mapping(string=>bool) internal isUser;
+    string public handSomeGuy;
+    uint public handSomeLikes = 0;
+    string public sexyChick;
+    uint public sexyChickLikes = 0;
+    bool public isLoggedIn = false;
+    string public loggedInUserName;
+    event liked(string by,string to);
+    event newUser(string name);
+    event newHandsome(string name);
+    event newSexyChick(string name);
+    constructor() ERC20("lust", "love") {
+         owner = payable(msg.sender);
+        _mint(msg.sender, 100000);
+    }
+
+    function _mintNewUserReward() internal {
+    _mint(block.coinbase, 1000);
+    }
+    function _transfer(address from, address to, uint256 value) override internal {
+        _mintNewUserReward();
+        super._transfer(from, to, value);
+    }
+
+    function createUser(string memory _name,uint _age,string memory _gender,string memory _profilePic,string memory _password)public returns(User memory){
+        require(!isUser[_name],"User with username already found");
+        require(!isLoggedIn, "you are already logged In");
+        users[_name].push(User(_name,_age,_gender,_profilePic,keccak256(abi.encode(_password)),false,0));
+        _transfer(owner,msg.sender,500);
+        userNames.push(_name);
+        emit newUser(_name);
+        isUser[_name] = !isUser[_name];
+        return users[_name][0];
+    }
+    
+    function logIn(string memory _name,string memory _password)public returns(bool){
+        require(!isLoggedIn,"you are already logged In");
+        require(isUser[_name], "user not found");
+        require(users[_name][0].password == keccak256(abi.encode(_password)), "message");
+        isLoggedIn = true;
+        loggedInUserName = _name;
+        return true;
+    }
+
+    function logOut()public returns(bool){
+        require(isLoggedIn,"you are already logged out");
+        isLoggedIn = false;
+        loggedInUserName = "";
+        loggedInUserName;
+        return true;
+    }
+    
+    function sendFriendRequest(string memory _to)public returns(Notification[] memory){
+         require(isLoggedIn,"you are already logged In");
+         _transfer(msg.sender,owner,20);
+         notifications[_to].push(Notification(loggedInUserName,_to,"friend request"));
+        return notifications[loggedInUserName];
+    }
+
+    string[] public friendsRequets;
+
+    function acceptFriendRequest(string memory _friend)public returns(Notification[] memory){
+        require(isLoggedIn,"you are already logged out");
+        uint len =  notifications[loggedInUserName].length;
+        while(friendsRequets.length>0){
+            friendsRequets.pop();
+        }
+        for(uint i = 0;i<len;i++){
+            if(keccak256(abi.encode(notifications[loggedInUserName][i].user))==keccak256(abi.encode(_friend))){
+                delete notifications[loggedInUserName][i];
+                friends[loggedInUserName].push(_friend);
+                friends[_friend].push(loggedInUserName);
+            }
+        }
+        return notifications[loggedInUserName];
+    }
+
+      function sendMessage(string memory _to,string memory _msg)public returns(Message[] memory){
+        uint noOfFriends  = friends[loggedInUserName].length;
+        for(uint i = 0;i<noOfFriends;i++){
+            if(keccak256(abi.encode(_to))==keccak256(abi.encode(friends[loggedInUserName][i]))){
+                _transfer(msg.sender,owner,20);
+                messages[loggedInUserName].push(Message(_to,_msg));
+                messages[_to].push(Message(loggedInUserName,_msg));
+            }
+        }
+        return messages[loggedInUserName];
+    }
+
+    function getAllMessages()public view returns(Message[] memory){
+        return messages[loggedInUserName];
+    }
+
+    function getAllNotifications()public view returns(Notification[] memory){
+        return notifications[loggedInUserName];
+    }
+
+    function getAllUsers()public view returns(string[] memory){
+        return userNames;
+    }
+
+    function handSomeBoy(string memory _name)public returns(uint,string memory){
+        if(users[_name][0].likes > handSomeLikes){
+            handSomeLikes = users[_name][0].likes;
+            handSomeGuy = _name;
+            emit newHandsome(handSomeGuy);
+        }
+        return (handSomeLikes,handSomeGuy);
+    }
+
+    function sexyGirl(string memory _name)public returns(uint,string memory){
+        if(users[_name][0].likes > sexyChickLikes){
+            sexyChickLikes = users[_name][0].likes;
+            sexyChick = _name;
+            emit newSexyChick(sexyChick);
+        }
+        return (sexyChickLikes,sexyChick);
+    }
+
+    function isLiked(string memory name)public view returns(bool){
+        uint noOfLiked = likedBy[name].length;
+        for(uint i =0;i<noOfLiked;i++){
+            if(keccak256(abi.encode(loggedInUserName))==keccak256(abi.encode(likedBy[name][i]))){
+                return true;
+            }
+        }
+        return false;
+    }
+
+    function HandleLike(string memory name)public returns(bool){
+        require(keccak256(abi.encode(name))!=keccak256(abi.encode(loggedInUserName)),"No self Liking");
+        bool doesHe = isLiked(name);
+        require(!doesHe,"You already liked");
+        _transfer(msg.sender,owner,20);
+        likedBy[name].push(loggedInUserName);
+        users[name][0].likes += 1;
+        emit liked(loggedInUserName,name);
+        if(keccak256(abi.encode("male"))==keccak256(abi.encode(users[name][0].gender))){
+                handSomeBoy(name);
+        }
+        else{
+                sexyGirl(name);
+        }
+        return doesHe;
+    } 
+
+    function Donations()public payable{
+        (bool success,) = owner.call{value: msg.value}("");
+        require(success, "Failed to send money");
+    }    
+
+    function GetTokkens()public{
+        require(balanceOf(msg.sender)<20,"");
+        _transfer(owner,msg.sender,500);
+    }
+}
