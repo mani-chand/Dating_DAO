@@ -1,95 +1,132 @@
-import Image from 'next/image'
-import styles from './page.module.css'
-
+"use client";
+import Styles from "./Styles.css";
+import React, { useState,useEffect } from "react";
+import { create } from "ipfs-http-client";
+import { Box, Button, Typography, TextField } from "@mui/material/";
+import ABI from './../../Asserts/ABI.json'
+import {ethers } from "ethers";
 export default function Home() {
+  const contractAddress = "0xDCe6C52Ad8FCDCFe32830Fe66074f645B3d260c4";
+  const [provider, setProvider] = useState(null);
+  const projectId = "2PxAxJftpMxj8bKkl8oDvZ4kII2";
+  const projectSecretKey = "0b115116f44285db872c632d0ebd2672";
+  const authorization = "Basic " + btoa(projectId + ":" + projectSecretKey);
+  const client = create({
+    url: "https://ipfs.infura.io:5001/api/v0",
+    headers: { authorization },
+  });
+
+  const [data, setData] = useState({});
+
+  const connectToMetaMask = async () => {
+    try {
+    const provider = new ethers.BrowserProvider(window.ethereum);
+    await provider.send("eth_requestAccounts", [0]);
+    setProvider(provider);
+    } catch (error) {
+      console.log(error)
+    }
+  };
+
+  const handleSubmit = async(e) => {
+    e.preventDefault();
+    if(data.file.type==="image/jpeg" && (data.gender==="male" || data.gender==="female") && (parseInt(data.age)>0)){
+      try {
+        console.log(provider)
+        const signer = await provider.getSigner();
+        console.log(signer)
+        const writeFunction = new ethers.Contract(contractAddress, ABI, signer);
+        const result = await writeFunction.createUser(data.username,data.age,data.gender,data.file,data.password)
+        console.log(result)
+      } catch (error) {}
+    }
+    else{
+      console.log("something went wrong")
+    }
+  };
+
+  useEffect(() => {
+    if (!provider) {
+      connectToMetaMask();
+    }
+  }, [provider]);
+
   return (
-    <main className={styles.main}>
-      <div className={styles.description}>
-        <p>
-          Get started by editing&nbsp;
-          <code className={styles.code}>src/app/page.js</code>
-        </p>
-        <div>
-          <a
-            href="https://vercel.com?utm_source=create-next-app&utm_medium=appdir-template&utm_campaign=create-next-app"
-            target="_blank"
-            rel="noopener noreferrer"
-          >
-            By{' '}
-            <Image
-              src="/vercel.svg"
-              alt="Vercel Logo"
-              className={styles.vercelLogo}
-              width={100}
-              height={24}
-              priority
+    <>
+      <Box m={5}>
+        <form onSubmit={handleSubmit}>
+          <TextField
+            onChange={(e) => {
+              setData({ ...data, username: e.target.value });
+            }}
+            required
+            style={{ marginTop: "7px" }}
+            type="text"
+            label="username"
+            variant="filled"
+            fullWidth
+          />
+          <TextField
+            onChange={(e) => {
+              setData({ ...data, age: e.target.value });
+            }}
+            required
+            style={{ marginTop: "7px" }}
+            type="text"
+            label="age"
+            variant="filled"
+            fullWidth
+          />
+          <TextField
+            onChange={(e) => {
+              setData({ ...data, gender: e.target.value });
+            }}
+            required
+            style={{ marginTop: "7px" }}
+            type="text"
+            label="gender"
+            variant="filled"
+            fullWidth
+          />
+          <TextField
+            onChange={(e) => {
+              setData({ ...data, password: e.target.value });
+            }}
+            required
+            style={{ marginTop: "7px" }}
+            type="password"
+            label="password"
+            variant="filled"
+            fullWidth
+          />
+          <div style={{ display: "flex", margin: "7px" }}>
+            <Typography
+              style={{ marginTop: "7px" }}
+              fontSize={20}
+              variant="subtitle2"
+              gutterBottom
+            >
+              Profile Picture :
+            </Typography>
+            <TextField
+              onChange={(e) => {
+                setData({ ...data, file: e.target.files[0] });
+              }}
+              required
+              accept="image/*"
+              type="file"
             />
-          </a>
-        </div>
-      </div>
-
-      <div className={styles.center}>
-        <Image
-          className={styles.logo}
-          src="/next.svg"
-          alt="Next.js Logo"
-          width={180}
-          height={37}
-          priority
-        />
-      </div>
-
-      <div className={styles.grid}>
-        <a
-          href="https://nextjs.org/docs?utm_source=create-next-app&utm_medium=appdir-template&utm_campaign=create-next-app"
-          className={styles.card}
-          target="_blank"
-          rel="noopener noreferrer"
-        >
-          <h2>
-            Docs <span>-&gt;</span>
-          </h2>
-          <p>Find in-depth information about Next.js features and API.</p>
-        </a>
-
-        <a
-          href="https://nextjs.org/learn?utm_source=create-next-app&utm_medium=appdir-template&utm_campaign=create-next-app"
-          className={styles.card}
-          target="_blank"
-          rel="noopener noreferrer"
-        >
-          <h2>
-            Learn <span>-&gt;</span>
-          </h2>
-          <p>Learn about Next.js in an interactive course with&nbsp;quizzes!</p>
-        </a>
-
-        <a
-          href="https://vercel.com/templates?framework=next.js&utm_source=create-next-app&utm_medium=appdir-template&utm_campaign=create-next-app"
-          className={styles.card}
-          target="_blank"
-          rel="noopener noreferrer"
-        >
-          <h2>
-            Templates <span>-&gt;</span>
-          </h2>
-          <p>Explore the Next.js 13 playground.</p>
-        </a>
-
-        <a
-          href="https://vercel.com/new?utm_source=create-next-app&utm_medium=appdir-template&utm_campaign=create-next-app"
-          className={styles.card}
-          target="_blank"
-          rel="noopener noreferrer"
-        >
-          <h2>
-            Deploy <span>-&gt;</span>
-          </h2>
-          <p>
-            Instantly deploy your Next.js site to a shareable URL with Vercel.
-          </p>
-        </a>
-      </div>
-    </main>
-  )
+          </div>
+          <Button
+            style={{ marginTop: "7px" }}
+            type="submit"
+            fullWidth
+            variant="contained"
+          >
+            Submit
+          </Button>
+        </form>
+      </Box>
+    </>
+  );
 }

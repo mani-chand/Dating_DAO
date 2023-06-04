@@ -1,0 +1,972 @@
+[
+	{
+	  "type": "constructor",
+	  "name": "",
+	  "inputs": [],
+	  "outputs": [],
+	  "stateMutability": "nonpayable"
+	},
+	{
+	  "type": "event",
+	  "name": "Approval",
+	  "inputs": [
+		{
+		  "type": "address",
+		  "name": "owner",
+		  "indexed": true,
+		  "internalType": "address"
+		},
+		{
+		  "type": "address",
+		  "name": "spender",
+		  "indexed": true,
+		  "internalType": "address"
+		},
+		{
+		  "type": "uint256",
+		  "name": "value",
+		  "indexed": false,
+		  "internalType": "uint256"
+		}
+	  ],
+	  "outputs": [],
+	  "anonymous": false
+	},
+	{
+	  "type": "event",
+	  "name": "Transfer",
+	  "inputs": [
+		{
+		  "type": "address",
+		  "name": "from",
+		  "indexed": true,
+		  "internalType": "address"
+		},
+		{
+		  "type": "address",
+		  "name": "to",
+		  "indexed": true,
+		  "internalType": "address"
+		},
+		{
+		  "type": "uint256",
+		  "name": "value",
+		  "indexed": false,
+		  "internalType": "uint256"
+		}
+	  ],
+	  "outputs": [],
+	  "anonymous": false
+	},
+	{
+	  "type": "event",
+	  "name": "liked",
+	  "inputs": [
+		{
+		  "type": "string",
+		  "name": "by",
+		  "indexed": false,
+		  "internalType": "string"
+		},
+		{
+		  "type": "string",
+		  "name": "to",
+		  "indexed": false,
+		  "internalType": "string"
+		}
+	  ],
+	  "outputs": [],
+	  "anonymous": false
+	},
+	{
+	  "type": "event",
+	  "name": "newHandsome",
+	  "inputs": [
+		{
+		  "type": "string",
+		  "name": "name",
+		  "indexed": false,
+		  "internalType": "string"
+		}
+	  ],
+	  "outputs": [],
+	  "anonymous": false
+	},
+	{
+	  "type": "event",
+	  "name": "newSexyChick",
+	  "inputs": [
+		{
+		  "type": "string",
+		  "name": "name",
+		  "indexed": false,
+		  "internalType": "string"
+		}
+	  ],
+	  "outputs": [],
+	  "anonymous": false
+	},
+	{
+	  "type": "event",
+	  "name": "newUser",
+	  "inputs": [
+		{
+		  "type": "string",
+		  "name": "name",
+		  "indexed": false,
+		  "internalType": "string"
+		}
+	  ],
+	  "outputs": [],
+	  "anonymous": false
+	},
+	{
+	  "type": "function",
+	  "name": "Donations",
+	  "inputs": [],
+	  "outputs": [],
+	  "stateMutability": "payable"
+	},
+	{
+	  "type": "function",
+	  "name": "GetTokkens",
+	  "inputs": [],
+	  "outputs": [],
+	  "stateMutability": "nonpayable"
+	},
+	{
+	  "type": "function",
+	  "name": "HandleLike",
+	  "inputs": [
+		{
+		  "type": "string",
+		  "name": "name",
+		  "internalType": "string"
+		}
+	  ],
+	  "outputs": [
+		{
+		  "type": "bool",
+		  "name": "",
+		  "internalType": "bool"
+		}
+	  ],
+	  "stateMutability": "nonpayable"
+	},
+	{
+	  "type": "function",
+	  "name": "acceptFriendRequest",
+	  "inputs": [
+		{
+		  "type": "string",
+		  "name": "_friend",
+		  "internalType": "string"
+		}
+	  ],
+	  "outputs": [
+		{
+		  "type": "tuple[]",
+		  "name": "",
+		  "components": [
+			{
+			  "type": "string",
+			  "name": "user",
+			  "internalType": "string"
+			},
+			{
+			  "type": "string",
+			  "name": "friend",
+			  "internalType": "string"
+			},
+			{
+			  "type": "string",
+			  "name": "typeOfRequest",
+			  "internalType": "string"
+			}
+		  ],
+		  "internalType": "struct Dating.Notification[]"
+		}
+	  ],
+	  "stateMutability": "nonpayable"
+	},
+	{
+	  "type": "function",
+	  "name": "allowance",
+	  "inputs": [
+		{
+		  "type": "address",
+		  "name": "owner",
+		  "internalType": "address"
+		},
+		{
+		  "type": "address",
+		  "name": "spender",
+		  "internalType": "address"
+		}
+	  ],
+	  "outputs": [
+		{
+		  "type": "uint256",
+		  "name": "",
+		  "internalType": "uint256"
+		}
+	  ],
+	  "stateMutability": "view"
+	},
+	{
+	  "type": "function",
+	  "name": "approve",
+	  "inputs": [
+		{
+		  "type": "address",
+		  "name": "spender",
+		  "internalType": "address"
+		},
+		{
+		  "type": "uint256",
+		  "name": "amount",
+		  "internalType": "uint256"
+		}
+	  ],
+	  "outputs": [
+		{
+		  "type": "bool",
+		  "name": "",
+		  "internalType": "bool"
+		}
+	  ],
+	  "stateMutability": "nonpayable"
+	},
+	{
+	  "type": "function",
+	  "name": "balanceOf",
+	  "inputs": [
+		{
+		  "type": "address",
+		  "name": "account",
+		  "internalType": "address"
+		}
+	  ],
+	  "outputs": [
+		{
+		  "type": "uint256",
+		  "name": "",
+		  "internalType": "uint256"
+		}
+	  ],
+	  "stateMutability": "view"
+	},
+	{
+	  "type": "function",
+	  "name": "createUser",
+	  "inputs": [
+		{
+		  "type": "string",
+		  "name": "_name",
+		  "internalType": "string"
+		},
+		{
+		  "type": "uint256",
+		  "name": "_age",
+		  "internalType": "uint256"
+		},
+		{
+		  "type": "string",
+		  "name": "_gender",
+		  "internalType": "string"
+		},
+		{
+		  "type": "string",
+		  "name": "_profilePic",
+		  "internalType": "string"
+		},
+		{
+		  "type": "string",
+		  "name": "_password",
+		  "internalType": "string"
+		}
+	  ],
+	  "outputs": [
+		{
+		  "type": "tuple",
+		  "name": "",
+		  "components": [
+			{
+			  "type": "string",
+			  "name": "username",
+			  "internalType": "string"
+			},
+			{
+			  "type": "uint256",
+			  "name": "age",
+			  "internalType": "uint256"
+			},
+			{
+			  "type": "string",
+			  "name": "gender",
+			  "internalType": "string"
+			},
+			{
+			  "type": "string",
+			  "name": "profilePic",
+			  "internalType": "string"
+			},
+			{
+			  "type": "bytes32",
+			  "name": "password",
+			  "internalType": "bytes32"
+			},
+			{
+			  "type": "bool",
+			  "name": "isCommited",
+			  "internalType": "bool"
+			},
+			{
+			  "type": "uint256",
+			  "name": "likes",
+			  "internalType": "uint256"
+			}
+		  ],
+		  "internalType": "struct Dating.User"
+		}
+	  ],
+	  "stateMutability": "nonpayable"
+	},
+	{
+	  "type": "function",
+	  "name": "decimals",
+	  "inputs": [],
+	  "outputs": [
+		{
+		  "type": "uint8",
+		  "name": "",
+		  "internalType": "uint8"
+		}
+	  ],
+	  "stateMutability": "view"
+	},
+	{
+	  "type": "function",
+	  "name": "decreaseAllowance",
+	  "inputs": [
+		{
+		  "type": "address",
+		  "name": "spender",
+		  "internalType": "address"
+		},
+		{
+		  "type": "uint256",
+		  "name": "subtractedValue",
+		  "internalType": "uint256"
+		}
+	  ],
+	  "outputs": [
+		{
+		  "type": "bool",
+		  "name": "",
+		  "internalType": "bool"
+		}
+	  ],
+	  "stateMutability": "nonpayable"
+	},
+	{
+	  "type": "function",
+	  "name": "friendsRequets",
+	  "inputs": [
+		{
+		  "type": "uint256",
+		  "name": "",
+		  "internalType": "uint256"
+		}
+	  ],
+	  "outputs": [
+		{
+		  "type": "string",
+		  "name": "",
+		  "internalType": "string"
+		}
+	  ],
+	  "stateMutability": "view"
+	},
+	{
+	  "type": "function",
+	  "name": "getAllMessages",
+	  "inputs": [],
+	  "outputs": [
+		{
+		  "type": "tuple[]",
+		  "name": "",
+		  "components": [
+			{
+			  "type": "string",
+			  "name": "to",
+			  "internalType": "string"
+			},
+			{
+			  "type": "string",
+			  "name": "message",
+			  "internalType": "string"
+			}
+		  ],
+		  "internalType": "struct Dating.Message[]"
+		}
+	  ],
+	  "stateMutability": "view"
+	},
+	{
+	  "type": "function",
+	  "name": "getAllNotifications",
+	  "inputs": [],
+	  "outputs": [
+		{
+		  "type": "tuple[]",
+		  "name": "",
+		  "components": [
+			{
+			  "type": "string",
+			  "name": "user",
+			  "internalType": "string"
+			},
+			{
+			  "type": "string",
+			  "name": "friend",
+			  "internalType": "string"
+			},
+			{
+			  "type": "string",
+			  "name": "typeOfRequest",
+			  "internalType": "string"
+			}
+		  ],
+		  "internalType": "struct Dating.Notification[]"
+		}
+	  ],
+	  "stateMutability": "view"
+	},
+	{
+	  "type": "function",
+	  "name": "getAllUsers",
+	  "inputs": [],
+	  "outputs": [
+		{
+		  "type": "string[]",
+		  "name": "",
+		  "internalType": "string[]"
+		}
+	  ],
+	  "stateMutability": "view"
+	},
+	{
+	  "type": "function",
+	  "name": "getLoggedInUser",
+	  "inputs": [],
+	  "outputs": [
+		{
+		  "type": "tuple",
+		  "name": "",
+		  "components": [
+			{
+			  "type": "string",
+			  "name": "username",
+			  "internalType": "string"
+			},
+			{
+			  "type": "uint256",
+			  "name": "age",
+			  "internalType": "uint256"
+			},
+			{
+			  "type": "string",
+			  "name": "gender",
+			  "internalType": "string"
+			},
+			{
+			  "type": "string",
+			  "name": "profilePic",
+			  "internalType": "string"
+			},
+			{
+			  "type": "bytes32",
+			  "name": "password",
+			  "internalType": "bytes32"
+			},
+			{
+			  "type": "bool",
+			  "name": "isCommited",
+			  "internalType": "bool"
+			},
+			{
+			  "type": "uint256",
+			  "name": "likes",
+			  "internalType": "uint256"
+			}
+		  ],
+		  "internalType": "struct Dating.User"
+		}
+	  ],
+	  "stateMutability": "view"
+	},
+	{
+	  "type": "function",
+	  "name": "handSomeBoy",
+	  "inputs": [
+		{
+		  "type": "string",
+		  "name": "_name",
+		  "internalType": "string"
+		}
+	  ],
+	  "outputs": [
+		{
+		  "type": "uint256",
+		  "name": "",
+		  "internalType": "uint256"
+		},
+		{
+		  "type": "string",
+		  "name": "",
+		  "internalType": "string"
+		}
+	  ],
+	  "stateMutability": "nonpayable"
+	},
+	{
+	  "type": "function",
+	  "name": "handSomeGuy",
+	  "inputs": [],
+	  "outputs": [
+		{
+		  "type": "string",
+		  "name": "",
+		  "internalType": "string"
+		}
+	  ],
+	  "stateMutability": "view"
+	},
+	{
+	  "type": "function",
+	  "name": "handSomeLikes",
+	  "inputs": [],
+	  "outputs": [
+		{
+		  "type": "uint256",
+		  "name": "",
+		  "internalType": "uint256"
+		}
+	  ],
+	  "stateMutability": "view"
+	},
+	{
+	  "type": "function",
+	  "name": "increaseAllowance",
+	  "inputs": [
+		{
+		  "type": "address",
+		  "name": "spender",
+		  "internalType": "address"
+		},
+		{
+		  "type": "uint256",
+		  "name": "addedValue",
+		  "internalType": "uint256"
+		}
+	  ],
+	  "outputs": [
+		{
+		  "type": "bool",
+		  "name": "",
+		  "internalType": "bool"
+		}
+	  ],
+	  "stateMutability": "nonpayable"
+	},
+	{
+	  "type": "function",
+	  "name": "isCommited",
+	  "inputs": [],
+	  "outputs": [
+		{
+		  "type": "bool",
+		  "name": "",
+		  "internalType": "bool"
+		}
+	  ],
+	  "stateMutability": "view"
+	},
+	{
+	  "type": "function",
+	  "name": "isLiked",
+	  "inputs": [
+		{
+		  "type": "string",
+		  "name": "name",
+		  "internalType": "string"
+		}
+	  ],
+	  "outputs": [
+		{
+		  "type": "bool",
+		  "name": "",
+		  "internalType": "bool"
+		}
+	  ],
+	  "stateMutability": "view"
+	},
+	{
+	  "type": "function",
+	  "name": "isLoggedIn",
+	  "inputs": [],
+	  "outputs": [
+		{
+		  "type": "bool",
+		  "name": "",
+		  "internalType": "bool"
+		}
+	  ],
+	  "stateMutability": "view"
+	},
+	{
+	  "type": "function",
+	  "name": "logIn",
+	  "inputs": [
+		{
+		  "type": "string",
+		  "name": "_name",
+		  "internalType": "string"
+		},
+		{
+		  "type": "string",
+		  "name": "_password",
+		  "internalType": "string"
+		}
+	  ],
+	  "outputs": [
+		{
+		  "type": "bool",
+		  "name": "",
+		  "internalType": "bool"
+		}
+	  ],
+	  "stateMutability": "nonpayable"
+	},
+	{
+	  "type": "function",
+	  "name": "logOut",
+	  "inputs": [],
+	  "outputs": [
+		{
+		  "type": "bool",
+		  "name": "",
+		  "internalType": "bool"
+		}
+	  ],
+	  "stateMutability": "nonpayable"
+	},
+	{
+	  "type": "function",
+	  "name": "loggedInUserName",
+	  "inputs": [],
+	  "outputs": [
+		{
+		  "type": "string",
+		  "name": "",
+		  "internalType": "string"
+		}
+	  ],
+	  "stateMutability": "view"
+	},
+	{
+	  "type": "function",
+	  "name": "name",
+	  "inputs": [],
+	  "outputs": [
+		{
+		  "type": "string",
+		  "name": "",
+		  "internalType": "string"
+		}
+	  ],
+	  "stateMutability": "view"
+	},
+	{
+	  "type": "function",
+	  "name": "sendFriendRequest",
+	  "inputs": [
+		{
+		  "type": "string",
+		  "name": "_to",
+		  "internalType": "string"
+		}
+	  ],
+	  "outputs": [
+		{
+		  "type": "tuple[]",
+		  "name": "",
+		  "components": [
+			{
+			  "type": "string",
+			  "name": "user",
+			  "internalType": "string"
+			},
+			{
+			  "type": "string",
+			  "name": "friend",
+			  "internalType": "string"
+			},
+			{
+			  "type": "string",
+			  "name": "typeOfRequest",
+			  "internalType": "string"
+			}
+		  ],
+		  "internalType": "struct Dating.Notification[]"
+		}
+	  ],
+	  "stateMutability": "nonpayable"
+	},
+	{
+	  "type": "function",
+	  "name": "sendMessage",
+	  "inputs": [
+		{
+		  "type": "string",
+		  "name": "_to",
+		  "internalType": "string"
+		},
+		{
+		  "type": "string",
+		  "name": "_msg",
+		  "internalType": "string"
+		}
+	  ],
+	  "outputs": [
+		{
+		  "type": "tuple[]",
+		  "name": "",
+		  "components": [
+			{
+			  "type": "string",
+			  "name": "to",
+			  "internalType": "string"
+			},
+			{
+			  "type": "string",
+			  "name": "message",
+			  "internalType": "string"
+			}
+		  ],
+		  "internalType": "struct Dating.Message[]"
+		}
+	  ],
+	  "stateMutability": "nonpayable"
+	},
+	{
+	  "type": "function",
+	  "name": "setCommited",
+	  "inputs": [],
+	  "outputs": [],
+	  "stateMutability": "nonpayable"
+	},
+	{
+	  "type": "function",
+	  "name": "sexyChick",
+	  "inputs": [],
+	  "outputs": [
+		{
+		  "type": "string",
+		  "name": "",
+		  "internalType": "string"
+		}
+	  ],
+	  "stateMutability": "view"
+	},
+	{
+	  "type": "function",
+	  "name": "sexyChickLikes",
+	  "inputs": [],
+	  "outputs": [
+		{
+		  "type": "uint256",
+		  "name": "",
+		  "internalType": "uint256"
+		}
+	  ],
+	  "stateMutability": "view"
+	},
+	{
+	  "type": "function",
+	  "name": "sexyGirl",
+	  "inputs": [
+		{
+		  "type": "string",
+		  "name": "_name",
+		  "internalType": "string"
+		}
+	  ],
+	  "outputs": [
+		{
+		  "type": "uint256",
+		  "name": "",
+		  "internalType": "uint256"
+		},
+		{
+		  "type": "string",
+		  "name": "",
+		  "internalType": "string"
+		}
+	  ],
+	  "stateMutability": "nonpayable"
+	},
+	{
+	  "type": "function",
+	  "name": "symbol",
+	  "inputs": [],
+	  "outputs": [
+		{
+		  "type": "string",
+		  "name": "",
+		  "internalType": "string"
+		}
+	  ],
+	  "stateMutability": "view"
+	},
+	{
+	  "type": "function",
+	  "name": "totalSupply",
+	  "inputs": [],
+	  "outputs": [
+		{
+		  "type": "uint256",
+		  "name": "",
+		  "internalType": "uint256"
+		}
+	  ],
+	  "stateMutability": "view"
+	},
+	{
+	  "type": "function",
+	  "name": "transfer",
+	  "inputs": [
+		{
+		  "type": "address",
+		  "name": "to",
+		  "internalType": "address"
+		},
+		{
+		  "type": "uint256",
+		  "name": "amount",
+		  "internalType": "uint256"
+		}
+	  ],
+	  "outputs": [
+		{
+		  "type": "bool",
+		  "name": "",
+		  "internalType": "bool"
+		}
+	  ],
+	  "stateMutability": "nonpayable"
+	},
+	{
+	  "type": "function",
+	  "name": "transferFrom",
+	  "inputs": [
+		{
+		  "type": "address",
+		  "name": "from",
+		  "internalType": "address"
+		},
+		{
+		  "type": "address",
+		  "name": "to",
+		  "internalType": "address"
+		},
+		{
+		  "type": "uint256",
+		  "name": "amount",
+		  "internalType": "uint256"
+		}
+	  ],
+	  "outputs": [
+		{
+		  "type": "bool",
+		  "name": "",
+		  "internalType": "bool"
+		}
+	  ],
+	  "stateMutability": "nonpayable"
+	},
+	{
+	  "type": "function",
+	  "name": "userNames",
+	  "inputs": [
+		{
+		  "type": "uint256",
+		  "name": "",
+		  "internalType": "uint256"
+		}
+	  ],
+	  "outputs": [
+		{
+		  "type": "string",
+		  "name": "",
+		  "internalType": "string"
+		}
+	  ],
+	  "stateMutability": "view"
+	},
+	{
+	  "type": "function",
+	  "name": "users",
+	  "inputs": [
+		{
+		  "type": "string",
+		  "name": "",
+		  "internalType": "string"
+		},
+		{
+		  "type": "uint256",
+		  "name": "",
+		  "internalType": "uint256"
+		}
+	  ],
+	  "outputs": [
+		{
+		  "type": "string",
+		  "name": "username",
+		  "internalType": "string"
+		},
+		{
+		  "type": "uint256",
+		  "name": "age",
+		  "internalType": "uint256"
+		},
+		{
+		  "type": "string",
+		  "name": "gender",
+		  "internalType": "string"
+		},
+		{
+		  "type": "string",
+		  "name": "profilePic",
+		  "internalType": "string"
+		},
+		{
+		  "type": "bytes32",
+		  "name": "password",
+		  "internalType": "bytes32"
+		},
+		{
+		  "type": "bool",
+		  "name": "isCommited",
+		  "internalType": "bool"
+		},
+		{
+		  "type": "uint256",
+		  "name": "likes",
+		  "internalType": "uint256"
+		}
+	  ],
+	  "stateMutability": "view"
+	}
+  ]
