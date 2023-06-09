@@ -16,23 +16,35 @@ export default function Navbar() {
       console.log(error);
     }
   };
-  const handleLogout=()=>{}
+  useEffect(() => {  
+    connectToMetaMask();
+},);
+  const handleLogout=async()=>{
+    try{
+            const provider = new ethers.BrowserProvider(window.ethereum);
+            const signer = await provider.getSigner();
+            const writeFunction = new ethers.Contract(contractAddress, ABI, signer);
+            const result = await writeFunction.logOut()
+            console.log(result)
+            window.location.replace('/login')
+    }catch(err){}
+  }
   const checkIsLoggedIn = async() => {
     try {
         const signer = await provider.getSigner();
         const writeFunction = new ethers.Contract(contractAddress, ABI, signer);
         const result = await writeFunction.isLoggedIn()
+        //console.log(result)
         setIsLoggedIn(result)
         localStorage.setItem("isAuth",JSON.stringify(result))
-        console.log(result)
     } catch (err) {
-       // console.log(err)
+        //console.log(err)
     }
   };
   
   useEffect(()=>{
     checkIsLoggedIn()
-  },[])
+  })
   return (
     <>
       <Box
@@ -55,6 +67,10 @@ export default function Navbar() {
             Dating app
           </Typography>
           <Box style={{ display: "flex", justifyContent: "center" }}>
+            
+            <Button onClick={handleLogout} size="large" variant="text">
+              Logout
+            </Button>
             <Button href="/login" size="large" variant="text">
               Login
             </Button>
