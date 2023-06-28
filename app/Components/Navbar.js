@@ -4,6 +4,7 @@ import { ethers } from "ethers";
 import ABI from './../Asserts/ABI.json'
 import { Box, Button, Paper, Typography } from "@mui/material/";
 export default function Navbar() {
+  const [loggedInUser,setLoggedInUser] = useState("")
   const contractAddress = "0xDCe6C52Ad8FCDCFe32830Fe66074f645B3d260c4";
   const [provider, setProvider] = useState(null);
   const [isLoggedIn,setIsLoggedIn] = useState(false)
@@ -16,9 +17,19 @@ export default function Navbar() {
       console.log(error);
     }
   };
+  const getloggedInUser = async()=>{
+    const provider = new ethers.BrowserProvider(window.ethereum);
+    const signer = await provider.getSigner();
+    const writeFunction = new ethers.Contract(contractAddress, ABI, signer);
+    const result = await writeFunction.loggedInUserName()
+    setLoggedInUser(result)
+}
   useEffect(() => {  
     connectToMetaMask();
 },);
+const handleOpenProfile = ()=>{
+  localStorage.setItem("friend",JSON.stringify({loggedInUser}))
+}
   const handleLogout=async()=>{
     try{
             const provider = new ethers.BrowserProvider(window.ethereum);
@@ -44,6 +55,7 @@ export default function Navbar() {
   
   useEffect(()=>{
     checkIsLoggedIn()
+    getloggedInUser()
   })
   return (
     <>
@@ -67,10 +79,23 @@ export default function Navbar() {
             Dating app
           </Typography>
           <Box style={{ display: "flex", justifyContent: "center" }}>
-            
+            {(isLoggedIn)?
+            <>
             <Button onClick={handleLogout} size="large" variant="text">
               Logout
             </Button>
+            <Button onClick={handleOpenProfile} href="/profile" size="large" variant="text">
+              profile
+            </Button>
+            <Button href="/friends" size="large" variant="text">
+              Home
+            </Button>
+            <Button href="/chat" size="large" variant="text">
+              chat
+            </Button>
+            </>
+            :
+            <>
             <Button href="/login" size="large" variant="text">
               Login
             </Button>
@@ -80,6 +105,8 @@ export default function Navbar() {
             <Button onClick={connectToMetaMask} size="large" variant="text">
               connect to wallet
             </Button>
+            </>
+            }
           </Box>
         </Paper>
       </Box>
